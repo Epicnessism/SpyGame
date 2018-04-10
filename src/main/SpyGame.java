@@ -9,33 +9,47 @@ public class SpyGame {
 		Scanner sc = new Scanner(System.in);
 		//Random rand = new Random();
 		
-		int playerNum;
-		String blankConfirm;
+		//Variables used:
+		int playerNum; //user input of players in the game
+		String blankConfirm; //user input if blanks are wanted
+		int spys; //the num of spys remaining
+		int blanks; //num of blanks remaining
+		int plebs; //num of normal people remaining
+		int survivingPlayers; //total remaining players
+
 		//get the number of playerNames to generate playing field
 		System.out.println("Please indicate the number of players: ");
 		playerNum = sc.nextInt();
 		sc.nextLine(); //gets rid of extra newline
 		System.out.println("Blanks on (if possible)?: (Y/N) ");
 		blankConfirm = sc.nextLine();
+		
+		//create the players arraylist
+		Players current_players = new Players(playerNum);
+		current_players.getNum();
+		
 
-		int spys;
-		int blanks;
-		int plebs;
-		int survivingPlayers;
 		spys = Math.floorDiv(playerNum, 3); //set spys
-		blanks = blankConfirm.equalsIgnoreCase("Y") ? Math.floorDiv(playerNum, 4) : 0;
-		plebs = playerNum - (spys + blanks);
+		blanks = blankConfirm.equalsIgnoreCase("Y") ? Math.floorDiv(playerNum, 4) : 0; //creates the spys if wanted
+		plebs = playerNum - (spys + blanks); //sets rest of people to normal people
 		survivingPlayers = playerNum; //no one is dead yet
+
+		//visual test all numbers were correctly and reasonable //TODELETE
 		System.out.println("Spys: "+ spys);
 		System.out.println("Blanks: "+ blanks);
 		System.out.println("Plebs: "+ plebs);
 		
+
 		//This is temporary, needs to move to setWords method later
+		//default null setting of playerWords array before populating
 		ArrayList<String> playerWords = new ArrayList<String>(Arrays.asList(new String[playerNum]));
-		Collections.fill(playerWords, null);
+		Collections.fill(playerWords, null); //easy way to populate arraylist with nulls
 		
+
 		//call setRoles to assign roles this also needs to be implemented later
 		ArrayList<Boolean> playerRoles = SpyGame.setRoles(playerNum, spys, blanks);
+
+		//then find their role, and apply their word accordingly method to be implemented //TODO
 		String spyWord = "ds"; //placeholder call greenFood whatever thing here
 		String plebWord = "d"; //placeholder
 		
@@ -69,9 +83,11 @@ public class SpyGame {
 		
 		
 		//start doing the encryption stuff here
+		//actually probably don't need encrpytion anymore
 		
 	}
 	
+	//sets the roles of each player to either a spy, blank, or pleb randomly
 	public static ArrayList<Boolean> setRoles(int playerNum, int spys,int blanks) {
 		ArrayList<Boolean> playerRoles = new ArrayList<Boolean>(Arrays.asList(new Boolean[playerNum]));
 		Collections.fill(playerRoles, Boolean.FALSE);
